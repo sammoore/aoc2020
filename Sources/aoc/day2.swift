@@ -3,18 +3,14 @@ import Foundation
 struct PasswordRule {
   let character: Character
   let range: Range<Int>
-  let rawRange: String?
 
   init(encoded: String) {
-    // print("ruleEncoded: \(encoded)")
     let ruleEncodedParts: [String] = encoded.components(separatedBy: " ")
     let character = ruleEncodedParts[1]
-    self.rawRange = ruleEncodedParts[0]
     let rangePair = ruleEncodedParts[0].components(separatedBy: "-").map { Int($0)! }
-    let range: Range<Int> = rangePair[0] ..< (rangePair[1] + 1)
 
     self.character = Array(character)[0]
-    self.range = range
+    self.range = rangePair[0] ..< (rangePair[1] + 1)
   }
 
   func evaluate(_ password: String) -> Bool {
@@ -25,10 +21,8 @@ struct PasswordRule {
     let nsRange = NSMakeRange(range.startIndex - 1, range.endIndex - range.startIndex)
     guard let stringRange = Range<String.Index>(nsRange, in: password) else { fatalError("range was invalid for string!") }
 
-    let substr = Array(String(password[stringRange]))
-    let first = substr[0]
-    let second = substr[substr.count - 1]
-    return [first, second].filter { $0 == character }.count == 1
+    let chars = Array(String(password[stringRange]))
+    return [chars[0], chars[chars.count - 1]].filter { $0 == character }.count == 1
   }
 }
 
