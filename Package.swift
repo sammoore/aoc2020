@@ -16,7 +16,8 @@ let package = Package(
             name: "aoc",
             dependencies: [],
             resources: [
-                .copy("input.txt")
+                .copy("1.txt"),
+                .copy("2.txt")
             ])
     ]
 )
