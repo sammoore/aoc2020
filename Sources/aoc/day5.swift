@@ -54,7 +54,7 @@ struct SeatPlan {
         if char == .Right { x += j }
       }
       else {
-        return self
+        break
       }
     }
 
