@@ -17,7 +17,6 @@ struct SeatPlan {
 
   var mine: Int? {
     let sorted = ids.sorted()
-    // not efficient
     for (index, value) in sorted.enumerated() {
       if 0 ..< sorted.count ~= index + 1 && sorted[index + 1] - 2 == value {
         return value + 1
@@ -41,10 +40,6 @@ struct SeatPlan {
     var x = 0
 
     for char in encoded {
-      guard i > 0 && j > 0 else {
-        fatalError("your logic might be flawed")
-      }
-
       if let char = FrontBack(rawValue: char) {
         i /= 2
         if char == .Back { y += i }
