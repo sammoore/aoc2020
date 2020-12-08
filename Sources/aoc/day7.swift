@@ -36,9 +36,9 @@ func parseRules(input: String) -> Dictionary<String, [(Int, String)]> {
     }
 }
 
-func contents(of: String, given rules: Dictionary<String, [(Int, String)]>) -> [(Int, String)] {
-  return rules[of]!.reduce(rules[of]!) { (out, each) in
-    out + contents(of: each.1, given: rules)
+func contents(of: String, given rules: Dictionary<String, [(Int, String)]>, multiple: Int = 1) -> [(Int, String)] {
+  return rules[of]!.reduce(rules[of]!.map { ($0.0 * multiple, $0.1) }) { (out, each) in
+    out + contents(of: each.1, given: rules, multiple: each.0 * multiple)
   }
 }
 
@@ -56,3 +56,16 @@ func day7_1(input: String) -> Int {
     .count
 }
 
+func day7_2(input: String) -> Int {
+  let rules: Dictionary<String, [(Int, String)]> = parseRules(input: input)
+
+  let contentsByOutermostBag: Dictionary<String, [(Int, String)]> = rules.keys
+    .reduce([:]) { (out, type) in
+      return out.merging([type: contents(of: type, given: rules)]) { $1 }
+    }
+
+  return contentsByOutermostBag["shiny gold"]!.reduce(0) { (sum, tuple) in
+    let (count, _) = tuple
+    return sum + count
+  }
+}
