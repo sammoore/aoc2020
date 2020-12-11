@@ -24,7 +24,8 @@ let package = Package(
                 .copy("6.txt"),
                 .copy("7.txt"),
                 .copy("8.txt"),
-                .copy("9.txt")
+                .copy("9.txt"),
+                .copy("10.txt")
             ])
     ]
 )
