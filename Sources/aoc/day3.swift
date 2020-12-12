@@ -1,6 +1,6 @@
 import Foundation
 
-enum MapTile: Character {
+fileprivate enum MapTile: Character {
   case none = "."
   case tree = "#"
 }
@@ -30,7 +30,7 @@ struct Map {
     return coordinate
   }
 
-  func tile(at coordinate: Coordinate) -> MapTile? {
+  fileprivate func tile(at coordinate: Coordinate) -> MapTile? {
     // TODO: there MUST be a better way to do this in type-safe swift :eyeroll:
     guard coordinate.y < lines.count else { return nil }
     let line = lines[coordinate.y]
